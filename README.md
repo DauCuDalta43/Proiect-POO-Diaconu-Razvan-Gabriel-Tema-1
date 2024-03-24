@@ -21,4 +21,5 @@ Poison: take that much damage each turn
 ## Referințe
 
 https://en.cppreference.com/w/ - diverse aspecte despre algoritmi
+
 https://slay-the-spire.fandom.com/wiki/Slay_the_Spire_Wiki - ideile pentru carti si inamici
