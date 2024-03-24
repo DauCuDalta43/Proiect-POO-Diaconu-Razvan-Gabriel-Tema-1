@@ -1,18 +1,24 @@
-# Nume proiect
-
-Acest repository este un _template_ care poate servi ca punct de plecare pentru proiectul vostru de POO. Folosiți butonul de „Use this template” din dreapta sus pentru a vă crea propriul repo pe baza lui.
+# Slash the Tower
 
 ## Descriere
 
-Notați aici o scurtă descriere a temei alese de voi.
+Inspirat dupa jocul hit Slay the Spire.
 
 ## Funcționalități
 
-Detaliația aici funcționalitățile pe care le îndeplinește aplicația voastră:
-- A
-- B
-- C
+In cadrul turei jucatorului el poate juca una dintre cartile extrase atat timp cat jucatorul are energia necesara. Fiecare carte are propriile efecte asupra inamicului. Cand jucatorul tasteaza e tura sa i se termina, urmand sa fie atacat de inamic cu miscarea precizata. La finalul luptei jucatorul are optiunea de a alege una din 3 carti care pot fi adaugate in pachet sau poate sa sara peste. La fiecare 3 lupte jucatorul va primi un boost permanent pentru durata jocului.
+
+Keywords:
+Weak: -25% damage dealt
+Vulnerable: +50% damage taken
+Frail: -25% block gained
+Strenght: adds to the value of attacks
+Dexterity: adds to the value of block
+Dazed: card that clogs your draw
+Poison: take that much damage each turn
+
 
 ## Referințe
 
-Notați aici ce alte resurse ați folosit / găsit utile pe parcursul dezvoltării proiectului.
+https://en.cppreference.com/w/ - diverse aspecte despre algoritmi
+https://slay-the-spire.fandom.com/wiki/Slay_the_Spire_Wiki - ideile pentru carti si inamici
