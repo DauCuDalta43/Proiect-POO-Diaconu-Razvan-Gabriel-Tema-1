@@ -31,7 +31,7 @@ class StiuSaFacConstructorDeCopiere
     {
         a=chiarstiu.a;
         b=chiarstiu.b;
-        cout<<"nu vroiam sa fac asta dar nu vreau mai multe erori in cod ca am fortat asta";
+        cout<<"nu voiam sa fac asta dar nu vreau mai multe erori in cod ca am fortat asta";
     }
 
     void SetValue(int x,int y)
@@ -113,7 +113,7 @@ class classDeck
         return deck;
     }
 
-    AddDeck(Card c)
+    void AddDeck(Card c)
     {
         deck.push_back(c);
     }
@@ -324,15 +324,17 @@ void CardReward(classDeck& p)
 
 class Player
 {
-    public:
-    classDeck deck;
-    OffHand oh;
+
 
     int Hp,Energy;
     int block;
     int weak,frail,vulnerable;
     int str,dex;
     int strBoost,dexBoost;
+    classDeck deck;
+    OffHand oh;
+    public:
+
 
     Player()
     {
@@ -343,6 +345,62 @@ class Player
         oh=OffHand(deck);
         ///hand=Hand(oh);
 
+    }
+
+    classDeck get_deck()
+    {
+        return deck;
+    }
+    OffHand& get_oh()
+    {
+        return oh;
+    }
+    int get_value(string s)
+    {
+        if(s=="Hp")
+            return Hp;
+        if(s=="Energy")
+            return Energy;
+        if(s=="block")
+            return block;
+        if(s=="weak")
+            return weak;
+        if(s=="frail")
+            return frail;
+        if(s=="vulnerable")
+            return vulnerable;
+        if(s=="str")
+            return str;
+        if(s=="dex")
+            return dex;
+        if(s=="strBoost")
+            return strBoost;
+        if(s=="dexBoost")
+            return dexBoost;
+    }
+
+    void set_value(string s,int x)
+    {
+        if(s=="Hp")
+            Hp+=x;
+        if(s=="Energy")
+            Energy+=x;
+        if(s=="block")
+            block+=x;
+        if(s=="weak")
+            weak+=x;
+        if(s=="frail")
+            frail+=x;
+        if(s=="vulnerable")
+            vulnerable+=x;
+        if(s=="str")
+            str+=x;
+        if(s=="dex")
+            dex+=x;
+        if(s=="strBoost")
+            strBoost+=x;
+        if(s=="dexBoost")
+            dexBoost+=x;
     }
 
     void Debuff(int type)
@@ -385,10 +443,11 @@ class Player
     void EndCombat()
     {
         CardReward(deck);
-        weak=frail=strBoost=dexBoost=block=0;
+        weak=frail=strBoost=vulnerable=dexBoost=block=0;
         Hp+=10;
         oh=OffHand(deck);
     }
+
 
 };
 
@@ -400,23 +459,23 @@ void Bonus(Player& p)
     {
         AfisBonus();
         if(ch<'1'||ch>'3')continue;
-        if(ch=='1')p.Energy++;
-        else if(ch=='2')p.str+=2;
-        else if(ch=='3')p.dex+=2;
+        if(ch=='1')p.set_value("Energy",1);
+        else if(ch=='2')p.set_value("str",2);
+        else if(ch=='3')p.set_value("dex",2);
         return;
     }
 }
 
-ostream & operator << (ostream &out, const Player &p)
+ostream & operator << (ostream &out, Player &p)
 {
-    cout<<"Health:"<<p.Hp<<"   Block:"<<p.block<<"\n";
-    if(p.dex+p.dexBoost)cout<<"Dexterity:"<<p.dex+p.dexBoost<<"  ";
-    if(p.str+p.strBoost)cout<<"Strenght:"<<p.str+p.strBoost<<"  ";
-    if(p.weak)cout<<"Weak:"<<p.weak<<"  ";
-    if(p.frail)cout<<"Frail:"<<p.frail<<"  ";
-    if(p.vulnerable)cout<<"Vulnerable:"<<p.vulnerable<<"  ";
+    cout<<"Health:"<<p.get_value("Hp")<<"   Block:"<<p.get_value("block")<<"\n";
+    if(p.get_value("dex")+p.get_value("dexBoost"))cout<<"Dexterity:"<<p.get_value("dex")+p.get_value("dexBoost")<<"  ";
+    if(p.get_value("str")+p.get_value("strBoost"))cout<<"Strenght:"<<p.get_value("str")+p.get_value("strBoost")<<"  ";
+    if(p.get_value("weak"))cout<<"Weak:"<<p.get_value("weak")<<"  ";
+    if(p.get_value("frail"))cout<<"Frail:"<<p.get_value("frail")<<"  ";
+    if(p.get_value("vulnerable"))cout<<"Vulnerable:"<<p.get_value("vulnerable")<<"  ";
     cout<<"\n\n";
-    cout<<p.oh;
+    cout<<p.get_oh();
 }
 
 void EnemyAttack(Player& p, int dmg, int intent, int type)
@@ -429,13 +488,61 @@ void EnemyAttack(Player& p, int dmg, int intent, int type)
 
 class Enemy
 {
-    public:
+
     string name,special;
     int Hp,dmg;
     int weak, vulnerable;
     int poison;
     int str;
     int stage,intent,type;
+
+    public:
+
+    string get_name()
+    {
+        return name;
+    }
+    string get_special()
+    {
+        return special;
+    }
+    int get_value(string s)
+    {
+        if(s=="Hp")
+            return Hp;
+        if(s=="dmg")
+            return dmg;
+        if(s=="weak")
+            return weak;
+        if(s=="vulnerable")
+            return vulnerable;
+        if(s=="poison")
+            return poison;
+        if(s=="str")
+            return str;
+        if(s=="stage")
+            return stage;
+        if(s=="intent")
+            return intent;
+        if(s=="type")
+            return type;
+    }
+
+    void set_value(string s, int x)
+    {
+        if(s=="Hp")
+            Hp+=x;
+        if(s=="dmg")
+            dmg+=x;
+        if(s=="weak")
+            weak+=x;
+        if(s=="vulnerable")
+            vulnerable+=x;
+        if(s=="poison")
+            poison+=x;
+        if(s=="str")
+            str+=x;
+    }
 
     Enemy()
     {
@@ -480,19 +587,19 @@ class Enemy
 
 };
 
-ostream & operator << (ostream &out, const Enemy &e)
+ostream & operator << (ostream &out, Enemy &e)
 {
-    int dmgVar=e.dmg+e.str/(1+e.intent);
-    if(e.weak)dmgVar*=0.75;
-    cout<<e.name<<"\n";
-    cout<<"Health:"<<e.Hp<<"\n";
-    cout<<"Deals "<<dmgVar+dmgVar*e.intent<<" Damage. ";
-    if(!e.intent)cout<<e.special;
+    int dmgVar=e.get_value("dmg")+e.get_value("str")/(1+e.get_value("intent"));
+    if(e.get_value("weak"))dmgVar*=0.75;
+    cout<<e.get_name()<<"\n";
+    cout<<"Health:"<<e.get_value("Hp")<<"\n";
+    cout<<"Deals "<<dmgVar+dmgVar*e.get_value("intent")<<" Damage. ";
+    if(!e.get_value("intent")||e.get_value("type")==4)cout<<e.get_special();
     cout<<"\n";
-    if(e.str)cout<<"Strenght:"<<e.str<<"   ";
-    if(e.weak)cout<<"Weak:"<<e.weak<<"   ";
-    if(e.vulnerable)cout<<"Vulnerable:"<<e.vulnerable<<"   ";
-    if(e.poison)cout<<"Poison:"<<e.poison<<"   ";
+    if(e.get_value("str"))cout<<"Strenght:"<<e.get_value("str")<<"   ";
+    if(e.get_value("weak"))cout<<"Weak:"<<e.get_value("weak")<<"   ";
+    if(e.get_value("vulnerable"))cout<<"Vulnerable:"<<e.get_value("vulnerable")<<"   ";
+    if(e.get_value("poison"))cout<<"Poison:"<<e.get_value("poison")<<"   ";
     return out;
 }
 
@@ -510,62 +617,62 @@ void Afisare(Player& p, Enemy& e, Hand& h)
 
 int CalcDmg(Hand& h, int base, int mult=1)
 {
-    float dmg=base+(h.get_Player().str+h.get_Player().strBoost)*mult;
-    if(h.get_Enemy().vulnerable)dmg*=1.5;
-    if(h.get_Player().weak)dmg*=0.75;
+    float dmg=base+(h.get_Player().get_value("str")+h.get_Player().get_value("strBoost"))*mult;
+    if(h.get_Enemy().get_value("vulnerable"))dmg*=1.5;
+    if(h.get_Player().get_value("weak"))dmg*=0.75;
     return (int)dmg;
 }
 
 int CalcBlock(Hand& h, int base)
 {
-    float block=base+h.get_Player().dex+h.get_Player().dexBoost;
-    if(h.get_Player().frail)block*=0.75;
+    float block=base+h.get_Player().get_value("dex")+h.get_Player().get_value("dexBoost");
+    if(h.get_Player().get_value("frail"))block*=0.75;
     return (int)block;
 }
 
 void Strike(Hand& h)
 {
-    h.get_Enemy().Hp-=CalcDmg(h,6);
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,6));
 }
 
 void Defend(Hand& h)
 {
-    h.get_Player().block+=CalcBlock(h,5);
+    h.get_Player().set_value("block",CalcBlock(h,5));
 }
 
 void Bash(Hand& h)
 {
-    h.get_Enemy().Hp-=CalcDmg(h,8);
-    h.get_Enemy().vulnerable+=2;
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,8));
+    h.get_Enemy().set_value("vulnerable",2);
 }
 
 void HeavyBlade(Hand& h)
 {
-    h.get_Enemy().Hp-=CalcDmg(h,14,3);
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,14,3));
 }
 
 void PommelStrike(Hand& h)
 {
-    h.get_Enemy().Hp-=CalcDmg(h,8);
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,8));
     h.Draw(1);
 
 }
 
 void ShruggOff(Hand& h)
 {
-    h.get_Player().block+=CalcBlock(h,8);
+    h.get_Player().set_value("block",CalcBlock(h,8));
     h.Draw(1);
 }
 
 void IronWave(Hand& h)
 {
-    h.get_Player().block+=CalcBlock(h,5);
-    h.get_Enemy().Hp-=CalcDmg(h,5);
+    h.get_Player().set_value("block",CalcBlock(h,5));
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,5));
 }
 
 void PowerThrough(Hand& h)
 {
-    h.get_Player().block+=CalcBlock(h,15);
+    h.get_Player().set_value("block",CalcBlock(h,15));
     Card c(19);
     h.AddtoHand(c);
 }
@@ -577,40 +684,40 @@ void SeeingRed(Hand& h)
 
 void Neutralize(Hand& h)
 {
-    h.get_Enemy().Hp-=CalcDmg(h,3);
-    h.get_Enemy().weak+=1;
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,3));
+    h.get_Enemy().set_value("weak",1);
 }
 
 void Deflect(Hand& h)
 {
-    h.get_Player().block+=CalcBlock(h,4);
+    h.get_Player().set_value("block",CalcBlock(h,4));
 }
 
 void DeadlyPoison(Hand& h)
 {
-    h.get_Enemy().poison+=5;
+    h.get_Enemy().set_value("poison",5);
 }
 
 void PoisonedStab(Hand& h)
 {
-    h.get_Enemy().poison+=3;
-    h.get_Enemy().Hp-=CalcDmg(h,6);
+    h.get_Enemy().set_value("poison",3);
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,6));
 }
 
 void Catalyst(Hand& h)
 {
-    h.get_Enemy().poison*=2;
+    h.get_Enemy().set_value("poison",h.get_Enemy().get_value("poison"));
 }
 
 void Footwork(Hand& h)
 {
-    h.get_Player().dexBoost+=2;
+    h.get_Player().set_value("dexBoost",2);
 }
 
 void LegSweep(Hand& h)
 {
-    h.get_Enemy().weak+=2;
-    h.get_Player().block+=CalcBlock(h,11);
+    h.get_Enemy().set_value("weak",2);
+    h.get_Player().set_value("block",CalcBlock(h,11));
 }
 
 void Adrenaline(Hand& h)
@@ -623,18 +730,18 @@ void Offering(Hand& h)
 {
     h.set_Energy(2);
     h.Draw(3);
-    h.get_Player().Hp-=3;
+    h.get_Player().set_value("Hp",-3);
 }
 
 void LimitBreak(Hand& h)
 {
-    h.get_Player().strBoost+=h.get_Player().str+h.get_Player().strBoost;
+    h.get_Player().set_value("strBoost",h.get_Player().get_value("str")+h.get_Player().get_value("strBoost"));
 }
 
 void Reaper(Hand& h)
 {
-    h.get_Enemy().Hp-=CalcDmg(h,4);
-    h.get_Player().Hp+=CalcDmg(h,4);
+    h.get_Enemy().set_value("Hp",-CalcDmg(h,4));
+    h.get_Player().set_value("Hp",CalcDmg(h,4));
 }
 
 
@@ -642,13 +749,11 @@ void PlayCard(Hand& h,int nr)
 {
     if(nr>=h.get_Hand().size())
     {
-        cout<<"Numar invalid\n";
         return;
     }
     Card c=h.get_Hand()[nr];
     if(h.get_Energy()<c.get_Cost())
     {
-        cout<<"Not enough energy\n";
         return;
     }
     h.set_Energy(-c.get_Cost());
@@ -708,6 +813,9 @@ void PlayCard(Hand& h,int nr)
         Offering(h);
         break;
     case 18:
+        LimitBreak(h);
+        break;
+    case 19:
         Reaper(h);
         break;
     }
@@ -716,13 +824,13 @@ void PlayCard(Hand& h,int nr)
 void Turn(Player& p, Enemy& e)
 {
     char ch;
-    Hand h=Hand(p.oh,p,e);
-    h.turnEnergy(p.Energy);
+    Hand h(p.get_oh(),p,e);
+    h.turnEnergy(p.get_value("Energy"));
     e.Intent();
     Afisare(p,e,h);
     while(cin>>ch)
     {
-        if(e.Hp<=0)return;
+        if(e.get_value("Hp")<=0)return;
 
         if(ch=='e')
         {
@@ -736,7 +844,7 @@ void Turn(Player& p, Enemy& e)
             //cout<<ch;
             PlayCard(h,int(ch-'1'));
         }
-        if(e.Hp<=0)return;
+        if(e.get_value("Hp")<=0)return;
         Afisare(p,e,h);
     }
 
@@ -759,9 +867,9 @@ void GameOver(int stage)
 int Combat(Player& p,int stage)
 {
     Enemy e=Enemy(stage);
-    while(p.Hp>0&&e.Hp>0)
+    while(p.get_value("Hp")>0&&e.get_value("Hp")>0)
         Turn(p,e);
-    if(p.Hp>0)
+    if(p.get_value("Hp")>0)
     {
         p.EndCombat();
         return 1;
